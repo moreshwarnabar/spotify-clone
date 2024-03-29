@@ -18,7 +18,6 @@ const getFavouriteSongs = async (): Promise<Song[]> => {
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.log('first');
     console.log(error);
     return [];
   }

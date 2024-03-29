@@ -14,7 +14,6 @@ const getSongs = async (): Promise<Song[]> => {
 
   if (error) {
     console.log(error);
-    console.log('first');
   }
 
   return (data as any) || [];
