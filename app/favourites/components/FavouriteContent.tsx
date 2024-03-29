@@ -2,6 +2,7 @@
 
 import LikeButton from '@/components/LikeButton';
 import MediaItem from '@/components/MediaItem';
+import useOnPlay from '@/hooks/useOnPlay';
 import { useUser } from '@/hooks/useUser';
 import { Song } from '@/types/types';
 import { useRouter } from 'next/navigation';
@@ -14,6 +15,8 @@ interface FavouriteContentProps {
 const FavouriteContent: React.FC<FavouriteContentProps> = ({ songs }) => {
   const router = useRouter();
   const { isLoading, user } = useUser();
+
+  const onPlay = useOnPlay(songs);
 
   useEffect(() => {
     if (!isLoading && !user) router.replace('/');
@@ -31,7 +34,7 @@ const FavouriteContent: React.FC<FavouriteContentProps> = ({ songs }) => {
       {songs.map(s => (
         <div key={s.id} className="flex items-center gap-x-4 w-full">
           <div className="flex-1 ">
-            <MediaItem onClick={() => {}} data={s} />
+            <MediaItem onClick={(id: string) => onPlay(id)} data={s} />
           </div>
           <LikeButton songId={s.id} />
         </div>
