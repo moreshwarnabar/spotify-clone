@@ -8,15 +8,17 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { TbPlaylist } from 'react-icons/tb';
 import MediaItem from './MediaItem';
 import useOnPlay from '@/hooks/useOnPlay';
+import useSubscribeModal from '@/hooks/useSubscribeModal';
 
 interface CatalogueProps {
   songs: Song[];
 }
 
 const Catalogue: React.FC<CatalogueProps> = ({ songs }) => {
+  const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
-  const { user } = useUser();
+  const { user, subscription } = useUser();
 
   const onPlay = useOnPlay(songs);
 
@@ -25,6 +27,7 @@ const Catalogue: React.FC<CatalogueProps> = ({ songs }) => {
     if (!user) return authModal.onOpen();
 
     // check for subscription
+    if (!subscription) return subscribeModal.onOpen();
 
     return uploadModal.onOpen();
   };

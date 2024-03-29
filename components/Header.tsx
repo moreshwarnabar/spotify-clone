@@ -12,6 +12,7 @@ import Button from './Button';
 import useAuthModal from '@/hooks/useAuthModal';
 import { useUser } from '@/hooks/useUser';
 import { FaUserAlt } from 'react-icons/fa';
+import usePlayer from '@/hooks/usePlayer';
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
+  const player = usePlayer();
   const { onOpen } = useAuthModal();
   const router = useRouter();
 
@@ -29,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
     // handle logout
     const { error } = await supabaseClient.auth.signOut();
     // reset any playing song
+    player.reset();
     router.refresh();
 
     if (error) {
